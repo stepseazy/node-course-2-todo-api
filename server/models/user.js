@@ -1,6 +1,6 @@
 mongoose=require('mongoose');
 
-var user= mongoose.model('user',{
+var User= mongoose.model('User',{
   email:{
     type:String,
     minlenth:1,
@@ -9,4 +9,4 @@ var user= mongoose.model('user',{
   },
 });
 
-module.exports={user};
+module.exports={User};
