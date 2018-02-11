@@ -1,27 +1,17 @@
 const request=require('supertest');
 const expect=require('expect');
 const {ObjectID}=require('mongodb');
+
 const {app}=require('./../server');
 const {Todo}=require('./../models/todo');
+const{todos, populateTodos}=require('./seed/seed');
 
-const todos=[{
-  _id:new ObjectID(),
-  text: 'first test todo'
-},{
-  _id:new ObjectID(),
-  text:'second todo test',
-  completed:true,
-  completedAt:333
-}];
+beforeEach(populateTodos);
 
-beforeEach((done)=>{
-  Todo.remove({}).then(()=>{
-    return Todo.insertMany(todos);
-  }).then(()=>done());
-});
 describe('Post /todos',()=>{
   it('should create a new todo',(done)=>{
     var text='test todo text';
+    done();
     request(app)
     .post('/todos')
     .send({text})
