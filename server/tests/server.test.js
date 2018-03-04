@@ -11,7 +11,6 @@ beforeEach(populateTodos);
 describe('Post /todos',()=>{
   it('should create a new todo',(done)=>{
     var text='test todo text';
-    done();
     request(app)
     .post('/todos')
     .send({text})
@@ -24,12 +23,13 @@ describe('Post /todos',()=>{
         return done(err);
       }
       Todo.find({text}).then((todos)=>{
+        console.log({text});
         expect(todos.length).toBe(1);
         expect(todos[0].text).toBe(text);
         done();
       }).catch((e)=>done(e));
     });
-  });
+  }).timeout(3000);
   it('should not create todo with invalid body data',(done)=>{
     request(app)
     .post('/todos')
