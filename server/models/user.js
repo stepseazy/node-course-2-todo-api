@@ -47,6 +47,15 @@ var UserSchema=new mongoose.Schema({
       return token;
     });
   };
+  UserSchema.methods.removeToken=function(token){
+      var user=this;
+      return user.update({
+        $pull:{
+            tokens:{token}
+        }
+      });
+  };
+
   UserSchema.statics.findByToken=function(token){
     var User=this;
     var decoded;
