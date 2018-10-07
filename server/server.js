@@ -12,6 +12,9 @@ var {
   Todo
 } = require('./models/todo');
 var {
+  Flight
+} = require('./models/flight');
+var {
   User
 } = require('./models/user');
 var {
@@ -25,6 +28,38 @@ var app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
+
+app.post(
+  '/flight',
+  (req, res) => {
+    var flight = new Flight({
+      name: req.body.name,
+      date: req.body.date,
+      lat: req.body.lat,
+      long: req.body.long
+    });
+    flight.save().then(
+      (r) => {
+        res.send(r);
+      },
+      (e) => {
+        res.status(400).send(e);
+      }
+    );
+  }
+);
+
+app.get('/flight',  (req, res) => {
+  Flight.find({ }).then(
+    (flights) => {
+      res.send({
+        flights
+      });
+    },
+    (e) => {
+      res.status(400).send(e);
+    });
+});
 
 app.post(
   '/todos',
